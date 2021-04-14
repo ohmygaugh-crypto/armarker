@@ -1,0 +1,19 @@
+{
+    "name": "armmarker",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ESC",
+    "dependencies": {
+        "express": "^4.17.1"
+    }
+}
