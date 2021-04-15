@@ -7,14 +7,16 @@
         "test": "test"
     },
     "scripts": {
-        "start": "node dist/server.js",
+        "start": "./node_modules/.bin/netlify-lambda serve src",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "node dist/server.js"
+        "build": "./node_modules/.bin/netlify-lambda build src"
     },
     "keywords": [],
     "author": "",
     "license": "ESC",
     "dependencies": {
-        "express": "^4.17.1"
+        "express": "^4.17.1",
+        "netlify-lambda": "^2.0.3",
+        "serverless-http": "^2.7.0"
     }
 }
