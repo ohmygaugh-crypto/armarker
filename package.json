@@ -7,7 +7,7 @@
         "test": "test"
     },
     "scripts": {
-        "start": "./node_modules/.bin/netlify-lambda serve src",
+        "start": "node ./dist/server.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "./node_modules/.bin/netlify-lambda build src"
     },
@@ -15,6 +15,7 @@
     "author": "",
     "license": "ESC",
     "dependencies": {
+        "aframe-video-controls": "^0.3.0",
         "express": "^4.17.1",
         "netlify-lambda": "^2.0.3",
         "serverless-http": "^2.7.0"
