@@ -16,6 +16,7 @@
     "license": "ESC",
     "dependencies": {
         "aframe-video-controls": "^0.3.0",
+        "cors": "^2.8.5",
         "express": "^4.17.1",
         "netlify-lambda": "^2.0.3",
         "serverless-http": "^2.7.0"
