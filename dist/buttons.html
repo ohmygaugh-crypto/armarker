@@ -1,0 +1,84 @@
+
+<style>
+    .button {
+      background-color: #4caf50
+      border: none;
+      color: white;
+      padding: 2px
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 12px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius 12px;
+      border: 2px solid rgba(0, 0, 0, 0.);
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.29);
+  
+    }
+  </style>
+  
+  <div style="position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;">
+    <button class="button" id="btn1">Play Sound</button>
+    <button class="button" id="btn2">Stop Sound</button>
+    <button class="button" id="btn3">Stop Video</button>
+    <button class="button" id="btn4">Play Vidoe</button>
+  
+  </div>
+    
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLV67NZF34"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+  
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-QLV67NZF34');
+    </script>
+  
+    <title>Become Future Proof</title>
+    <meta name="description" content="Textures - A-Frame School">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-animation-component@3.2.1/dist/aframe-animation-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-outline@%5E1.1.0/build/aframe-outline.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://unpkg.com/aframe-mapbox-component/dist/aframe-mapbox-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%7CRoboto+Mono" media="all" />
+    <link rel="stylesheet" type="text/css" href="cardstyle.css">
+    
+  
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js"></script>
+    <script src="https://rawgit.com/oscarmarinmiro/aframe-video-controls/master/dist/aframe-video-controls.min.js"></script>
+    <script>
+      var m= document.querySelector("a-marker")
+      m.addEventListener("markerFound", (e) => {
+        console.log("found")
+        var v = document.querySelector('#vid').play();
+  
+      })
+      m.addEventListener("markerLost", (e) => {
+        console.log("lost")
+        var v = document.querySelector('#vid').pause();
+        
+      })
+    document.getElementById("btn1").addEventListener("click", (e) =>{
+      var v = document.querySelector('#vid').muted=false;
+    })
+    document.getElementById("btn2").addEventListener("click", (e) =>{
+      var v = document.querySelector('#vid').muted=true;
+    })
+    document.getElementById("btn3").addEventListener("click", (e) =>{
+      var v = document.querySelector('#vid').pause();
+    })
+    document.getElementById("btn4").addEventListener("click", (e) =>{
+      var v = document.querySelector('#vid').play();
+    })
+  </script>
