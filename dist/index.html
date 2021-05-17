@@ -43,7 +43,7 @@
                 if (this.el.object3D.visible == true) {
                     if (!this.toggle) {
                         this.toggle = true;
-                        this.vid.play();
+                        this.vid.pause();
                     }
                 } else {
                     this.toggle = false;
@@ -129,14 +129,14 @@
       <img crossorigin="anonymous" id="ericaTexture" src="https://media-exp1.licdn.com/dms/image/C4E03AQHsDKksLSBKKg/profile-displayphoto-shrink_200_200/0/1620175420859?e=1626307200&v=beta&t=8VTKgGOaQz0Zgfpub3Brta_YcewbouNQVqc24mcyboQ">
       <img crossorigin="anonymous" id="gordonTexture" src="https://media-exp1.licdn.com/dms/image/C4D35AQHIq2KC7EiVYw/profile-framedphoto-shrink_800_800/0/1617491492021?e=1620774000&v=beta&t=5gIQe2uF97jj8rxC9AeAdkzpvK20dHEtU3RPdKC35ns">
       <img crossorigin="anonymous" id="sethTexture" src="https://media-exp1.licdn.com/dms/image/C4E03AQELUuCGml-gbw/profile-displayphoto-shrink_200_200/0/1535629786261?e=1625097600&v=beta&t=2Mr75w4Zefq73fZ1WRdZ9wTXZnvscsr_4NOEKIutpPk">
-      <video crossorigin="anonymous" id="vid" controls="true" loop="false" play="false" muted src="https://cdn.glitch.com/27dc6bf0-f8fe-4246-aee1-4e96b64296ac%2FValididemashupShort.mp4?v=1620684502287" playsinline webkit-playsinline></video>
+      <video crossorigin="anonymous" id="vid" controls="true" loop="false" play="false" src="https://cdn.glitch.com/27dc6bf0-f8fe-4246-aee1-4e96b64296ac%2FValididemashupShort.mp4?v=1620684502287" playsinline webkit-playsinline></video>
     </a-assets>
 
     
 
     <a-marker vidhandler preset="hiro">
 
-      <a-video material="src: #vid" scale="5.822 2.002 4.119" position="-0.06 .503 -1.677" rotation="-66.2 0.192 -0.042"></a-video>
+      <a-video vidhandler class="clickable" material="src: #vid" scale="5.822 2.002 4.119" position="-0.06 .503 -1.677" rotation="-66.2 0.192 -0.042"></a-video>
 
       <a-entity position="-4.09 .5 .64" rotation="-65.98 -4.56 5.28" scale="0.1 .25 .2" text-geometry="bevelEnabled:true;bevelSize:0.1;bevelThickness:0.1;curveSegments:1;height:0.5;size:2;value: BECOME FUTURE PROOF"
         material="color:white;sphericalEnvMap:https://cdn.glitch.com/6f8b5a13-fd4d-445d-b9eb-57c735d720ea%2FTextureMap.png?1528781398531"></a-entity>
