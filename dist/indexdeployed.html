@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLV67NZF34"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-QLV67NZF34');
+  </script>
+
+  <title>Become Future Proof</title>
+  <meta name="description" content="Textures - A-Frame School">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-animation-component@3.2.1/dist/aframe-animation-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-outline@%5E1.1.0/build/aframe-outline.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <script src="https://unpkg.com/aframe-mapbox-component/dist/aframe-mapbox-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%7CRoboto+Mono" media="all" />
+  <link rel="stylesheet" type="text/css" href="cardstyle.css">
+  
+
+  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js"></script>
+  <script src="https://rawgit.com/oscarmarinmiro/aframe-video-controls/master/dist/aframe-video-controls.min.js"></script>
+  <script>
+    AFRAME.registerComponent('vidhandler', {
+            init: function() {
+                this.toggle = false;
+                this.vid = document.querySelector("#vid");
+                this.vid.pause();
+            },
+            tick: function() {
+                if (this.el.object3D.visible == true) {
+                    if (!this.toggle) {
+                        this.toggle = true;
+                        this.vid.pause();
+                    }
+                } else {
+                    this.toggle = false;
+                    this.vid.pause();
+                }
+            }
+        });
+
+        function refrespage() {
+            location.reload();
+        }
+
+        function playvid() {
+            vid.play();
+        }
+        window.addEventListener('click', function playPause() {
+    var v = document.querySelector('#vid');
+    if (v.paused)
+   v.play(); 
+ else 
+   v.pause();
+  });
+</script>
+
+
+<link rel="shortcut icon" href="../../assets/img/icons/favicon.ico" type="image/x-icon" />
+
+  <script type="text/javascript">
+    let checkExist = setInterval(function() {
+      if (document.getElementById("arjsDebugUIContainer")) {
+        let interface = document.getElementById("arjsDebugUIContainer");
+        interface.remove();
+      }
+    }, 100);
+    checkExist;
+  </script>
+
+  <script type="text/javascript">
+    var gotitBtn = $(".gotit");
+    gotitBtn.click(function() {
+      gotitBtn.parent().css({
+        display: "none"
+      });
+    });
+    //Camera feature check
+    function hasGetUserMedia() {
+      return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia || navigator.msGetUserMedia);
+    }
+    if (hasGetUserMedia()) {
+      $('#splashScreen').css('display', 'block');
+    }
+    // else {
+    //     let template = '<p>This feature is not supported in your browser. Please try again using a different device and/or browser.</p>';
+    //     $('#noMedia').append(template);
+    //     $('#noMedia').css('display', 'block');
+    // }
+  </script>
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+  <main class="main">
+    <div id="splashScreen" class="AR-tip" style="display:none">
+      <p>
+        <strong>Welcome to our Augmented Reality Experience! To view, please allow ONE TIME access to your camera.  Nothing fishy this is just how AR works :P ...If you instinctively denied that prompt then you simply have to go into your browser settings and unblock camera access for this validide.io </strong> <br> <br> Hold the coaster at arms length to enjoy the full experience. <br>
+        To select any of the menu options, just aim the crosshairs on them and wait for a few seconds.
+      <div class="instructions">
+        <a><img src="https://png.pngtree.com/element_our/20190603/ourmid/pngtree-no-entry-into-cartoon-instructions-image_1438841.jpg" /></a>
+      </div>
+
+      </p>
+      <div class="gotit btn custom-button">Let's do it</div>
+      <p>
+        <br><cite>* In case of any problem on iOS, try on Android</cite>
+      </p>
+    </div>
+    <div class="AR-tip" id="noMedia" style="display:none">
+    </div>
+
+  </main>
+  <a-scene embedded arjs="sourceType: webcam;" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" aframe-inspector-removed-embedded="undefined">
+    <canvas class="a-canvas" data-aframe-canvas="true" width="300" height="150"></canvas>
+
+    <a-assets>
+      <img crossorigin="anonymous" id="profileTexture" src="https://avatars.githubusercontent.com/u/58447309?v=4">
+      <img crossorigin="anonymous" id="ericaTexture" src="https://media-exp1.licdn.com/dms/image/C4E03AQHsDKksLSBKKg/profile-displayphoto-shrink_200_200/0/1620175420859?e=1626307200&v=beta&t=8VTKgGOaQz0Zgfpub3Brta_YcewbouNQVqc24mcyboQ">
+      <img crossorigin="anonymous" id="gordonTexture" src="https://media-exp1.licdn.com/dms/image/C4D35AQHIq2KC7EiVYw/profile-framedphoto-shrink_800_800/0/1617491492021?e=1620774000&v=beta&t=5gIQe2uF97jj8rxC9AeAdkzpvK20dHEtU3RPdKC35ns">
+      <img crossorigin="anonymous" id="sethTexture" src="https://media-exp1.licdn.com/dms/image/C4E03AQELUuCGml-gbw/profile-displayphoto-shrink_200_200/0/1535629786261?e=1625097600&v=beta&t=2Mr75w4Zefq73fZ1WRdZ9wTXZnvscsr_4NOEKIutpPk">
+      <video crossorigin="anonymous" id="vid" controls="true" loop="false" play="false" src="https://cdn.glitch.com/27dc6bf0-f8fe-4246-aee1-4e96b64296ac%2FValididemashupShort.mp4?v=1620684502287" playsinline webkit-playsinline></video>
+    </a-assets>
+
+    
+
+    <a-marker vidhandler preset="hiro">
+
+      <a-video vidhandler class="clickable" material="src: #vid" scale="5.822 2.002 4.119" position="-0.06 .503 -1.677" rotation="-66.2 0.192 -0.042"></a-video>
+
+      <a-entity position="-4.09 .5 .64" rotation="-65.98 -4.56 5.28" scale="0.1 .25 .2" text-geometry="bevelEnabled:true;bevelSize:0.1;bevelThickness:0.1;curveSegments:1;height:0.5;size:2;value: BECOME FUTURE PROOF"
+        material="color:white;sphericalEnvMap:https://cdn.glitch.com/6f8b5a13-fd4d-445d-b9eb-57c735d720ea%2FTextureMap.png?1528781398531"></a-entity>
+
+      <a-box scale="1 1 1" material="src: #profileTexture" position="0 0 0" radius="2" segments-height="84"></a-box>
+      
+      
+      <a-link class="clickable" href="https://www.linkedin.com/in/erica-barnette/" title="" image="" position=".8 0.0 1" rotation="-67.42 0 0" scale="0.6 0.6 0.6" geometry="primitive:circle;segments:64" material="shader:portal;side:double;visible:false"
+        link="title:.">
+      <a-box scale="0.8 0.8 1.05" material="src:#ericaTexture" position="1.252 -0.0036935886841299587 -0.2155814669584256" radius="2" segments-height="84" rotation="-23.450000000000003 0 0" geometry="">
+      </a-box>
+      </a-link>
+      
+      <a-link class="clickable" href="https://www.linkedin.com/in/seth-mcgaugh-575787116/" position="1.6 0.0 .333" title="" image="" rotation="-67.42 0 0" scale="0.6 0.6 0.6" geometry="primitive:circle;segments:64" material="shader:portal;side:double;visible:false"
+        link="title:.">
+      <a-box scale="0.8 0.8 1.05" material="src:#sethTexture" position="-0.05854454977856898 -0.0036935886841299587 -0.2155814669584256" radius="2" segments-height="84" rotation="-23.450000000000003 0 0" geometry="">
+      </a-box>
+      </a-link>
+      
+      <a-link class="clickable" href="https://www.linkedin.com/in/drgordonjones/" title="" image="" position="2.2 0.0 -.33" rotation="-67.42 0 0" scale="0.6 0.6 0.6" geometry="primitive:circle;segments:64" material="shader:portal;side:double;visible:false"
+      link="title:.">
+      <a-box scale="0.8 0.8 1.05" material="src:#gordonTexture" position="-1.05 -0.0036935886841299587 -0.2155814669584256" radius="2" segments-height="84" rotation="-23.450000000000003 0 0" geometry="">
+      </a-box>
+      </a-link>
+      
+
+      <a-entity
+        geometry="primitive: plane; width: 4; height: 2;"
+        material="color: #ffffff; shader: flat; side: both; transparent: true;"
+        mapbox="center: -81.01640, 34.0000; zoom: 15.4; 
+        accessToken: pk.eyJ1Ijoib2hteWdhdWdoIiwiYSI6ImNrZHhqNWYwZDF3YnAzMHQ2c3R1MTZsNWIifQ.AfbXwF55tfopc6OaFjm88A;
+          style: mapbox://styles/ohmygaugh/cko60xl0z23n217qu3wbr32j3;
+          pxToWorldRatio: 1300;
+                "
+        position="0.340 -0.83574 3.5" rotation="-66.42 0 0" scale="2.267 2.2680 6.316"
+      ></a-entity>
+    </a-marker>
+
+    <a-entity camera="" position="" rotation="" scale="" visible=""></a-entity>
+    <a-entity cursor="fuse: true; fuseTimeout: 2000" raycaster="objects: .clickable" position="0 0 -1" scale="0.01 0.01 0.01" geometry="primitive: ring" material="color: white; shader: flat" rotation="" visible="">
+      <a-animation begin="fusing" easing="ease-in" attribute="scale" fill="backwards" from="0.01 0.01 0.01" to="0.02 0.02 0.02" dur="3000"></a-animation>
+      <a-animation begin="fusing" easing="ease-in" attribute="material.color" from="white" to="orange" dur="3000"></a-animation>
+    </a-entity>
+  </a-scene>
+
+  
+</body>
+
+</html>

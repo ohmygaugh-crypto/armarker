@@ -1,0 +1,34 @@
+/* CSS files add styling rules to the content */
+
+@import url(https://fonts.googleapis.com/css?family=Lexend+Deca);
+
+body {
+    font-family: "Lexend Deca", sans-serif;
+    margin: 0px;
+    overflow: hidden; /*"hidden" means overflow is clipped, and the rest of the content will be invisible*/
+}
+
+.logoWrapper {
+    position: absolute; 
+    top: 5px; 
+    left: 5px; 
+    width: 100%; 
+    z-index: -1; /* needs to be in the background so that it doesn't overlay the title (from html) */
+}
+
+.logoImage {
+    width: 29%;   /* 104px */
+    height: 29%;  /*  40px */
+    visibility: visible; /* needs to be added, so that the image is always visible. Otherwise it could flicker during click-events or even be hidden (on iOS (Vers.13.5.1, Safari)) */
+}
+
+.scannerWrapper {
+    position: fixed;
+    top: 20%;
+    left: 20%;
+    margin: 0 auto;
+}
+
+.scannerImage {
+    width: 75%;
+}

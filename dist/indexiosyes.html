@@ -2,22 +2,14 @@
 <html>
   
 <head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLV67NZF34"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-    gtag('config', 'G-QLV67NZF34');
-  </script>
-
+  
   <title>Become Future Proof</title>
   <meta name="description" content="Textures - A-Frame School">
+  <!--iOS Mobile Necessary-->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-animation-component@3.2.1/dist/aframe-animation-component.min.js"></script>
   <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
@@ -27,11 +19,12 @@
   <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%7CRoboto+Mono" media="all" />
-  <link rel="stylesheet" type="text/css" href="cardstyle.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
   
 
   <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js"></script>
   <script src="https://rawgit.com/oscarmarinmiro/aframe-video-controls/master/dist/aframe-video-controls.min.js"></script>
+  <!--Find how to make it pause? on click too!-->
   <script>
     AFRAME.registerComponent('vidhandler', {
             init: function() {
@@ -59,10 +52,102 @@
         function playvid() {
             vid.play();
         }
-        window.addEventListener('click', function () {
+        window.addEventListener('click', function playPause() {
     var v = document.querySelector('#vid');
-    v.play();
-  });
+    if (v.paused)
+   v.play(); 
+ else 
+   v.pause();
+   });
+</script>
+
+
+<script>
+  /* Cursor-hack Function: to adjust the jsartoolkit5 projection matrix and the threejs projection matrix and emitting click-events */
+AFRAME.registerComponent("cursor-modifier", {
+	init: function() {
+		var scene = this.el
+
+		// wait until the arSession is ready
+		scene.addEventListener("arSessionReady", function() {
+			var arSession = scene.systems["arjs"]._arSession
+			// helpers
+			var raycaster = new THREE.Raycaster();
+			var mouse = new THREE.Vector2();
+			// useful references
+			var cursorElement = document.querySelector("[cursor]")
+			var arToolkitContext = arSession.arContext
+			var camera = scene.camera
+
+			function mousedown(event) {
+				// core of this 'hack' - using the arToolkitContext projection matrix
+				// makes sure that jsartoolkit5 projection matrix is not out of sync with the threejs projection matrix
+				camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
+				camera.projectionMatrixInverse.getInverse(camera.projectionMatrix);
+
+				var point
+				if (event.type === "touchmove" || event.type === "touchstart") {
+					// Track the first touch for simplicity.
+					point = event.touches.item(0);
+				} else {
+					point = event;
+				}
+				// Calculate mouse position based on the canvas element
+				var rect = scene.renderer.domElement.getBoundingClientRect();
+				mouse.x = ((point.clientX - rect.left) / rect.width) * 2 - 1  
+				mouse.y = -((point.clientY - rect.top) / rect.height) * 2 + 1 
+				raycaster.setFromCamera(mouse, camera); 		     
+				// if there are any intersections - send the clicks
+				var intersects = raycaster.intersectObjects(scene.object3D.children, true);
+				if (intersects.length > 0) {
+					// this click is stripped of any info it should have
+					intersects[0].object.el.emit("click")
+				}
+				event.stopPropagation();
+			}
+			window.addEventListener('mousedown', mousedown, false);
+			//window.addEventListener('touchstart', mousedown, false);
+		})
+	}
+})
+</script>
+
+<script>
+  /* Logohandler Function: to let the image of the logo show. Otherwise it would start to flicker or hide when the user clicks somewhere
+   It still disappears sometimes on iOS (Vers. 13.5.1, Safari) */
+AFRAME.registerComponent("logohandler", {
+	init: function () {
+    		const marker = document.querySelector("#marker");
+    		const logo = document.querySelector("#logo");
+
+    		marker.addEventListener('markerFound', function () {
+       			logo.hidden = false;
+    		}.bind(this));
+    
+    		marker.addEventListener('markerLost', function () {
+       			logo.hidden = false;
+    		}.bind(this));
+  	}
+});
+</script>
+
+<script>
+  /* Scannerhandler Function: to let the image of the scanner show or hide when marker is tracked or not tracked */
+AFRAME.registerComponent("scannerhandler", {
+	init: function () {
+    		const marker = document.querySelector("#marker");
+    		const scanner = document.querySelector("#scanner");
+
+    		marker.addEventListener('markerFound', function () {
+       			scanner.hidden = true;
+    		}.bind(this));
+    
+    		marker.addEventListener('markerLost', function () {
+       			scanner.hidden = false;
+    		}.bind(this));
+  	}
+});
+
 </script>
 
 
@@ -78,51 +163,23 @@
     checkExist;
   </script>
 
-  <script type="text/javascript">
-    var gotitBtn = $(".gotit");
-    gotitBtn.click(function() {
-      gotitBtn.parent().css({
-        display: "none"
-      });
-    });
-    //Camera feature check
-    function hasGetUserMedia() {
-      return !!(navigator.getUserMedia || navigator.webkitGetUserMedia ||
-        navigator.mozGetUserMedia || navigator.msGetUserMedia);
-    }
-    if (hasGetUserMedia()) {
-      $('#splashScreen').css('display', 'block');
-    }
-    // else {
-    //     let template = '<p>This feature is not supported in your browser. Please try again using a different device and/or browser.</p>';
-    //     $('#noMedia').append(template);
-    //     $('#noMedia').css('display', 'block');
-    // }
-  </script>
+  
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
-  <main class="main">
-    <div id="splashScreen" class="AR-tip" style="display:none">
-      <p>
-        <strong>Welcome to our Augmented Reality Experience! To view, please allow ONE TIME access to your camera.  Nothing fishy this is just how AR works :P ...If you instinctively denied that prompt then you simply have to go into your browser settings and unblock camera access for this validide.io </strong> <br> <br> Hold the coaster at arms length to enjoy the full experience. <br>
-        To select any of the menu options, just aim the crosshairs on them and wait for a few seconds.
-      <div class="instructions">
-        <a><img src="https://png.pngtree.com/element_our/20190603/ourmid/pngtree-no-entry-into-cartoon-instructions-image_1438841.jpg" /></a>
-      </div>
 
-      </p>
-      <div class="gotit btn custom-button">Let's do it</div>
-      <p>
-        <br><cite>* In case of any problem on iOS, try on Android</cite>
-      </p>
-    </div>
-    <div class="AR-tip" id="noMedia" style="display:none">
-    </div>
+  <!-- Logo -->
+  <div class="logoWrapper">
+    <input id="logo" type="image" class="logoImage" src="https://cdn.glitch.com/27dc6bf0-f8fe-4246-aee1-4e96b64296ac%2Fthumbnails%2Fvalididelogo.png?1621277996333"></input>
+</div> 
 
-  </main>
-  <a-scene embedded arjs="sourceType: webcam;" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" aframe-inspector-removed-embedded="undefined">
-    <canvas class="a-canvas" data-aframe-canvas="true" width="300" height="150"></canvas>
+<!-- Scanner -->	
+<div class="scannerWrapper">
+<input id="scanner" type="image" class="scannerImage" src="https://cdn.glitch.com/27dc6bf0-f8fe-4246-aee1-4e96b64296ac%2FARscanner.png?1621278420901"></input>
+</div>
+
+  <a-scene logohandler scannerhandler cursor-modifier embedded arjs="sourceType: webcam;" inspector="" keyboard-shortcuts="" screenshot="" vr-mode-ui="" aframe-inspector-removed-embedded="undefined">
+    
 
     <a-assets>
       <img crossorigin="anonymous" id="profileTexture" src="https://avatars.githubusercontent.com/u/58447309?v=4">
@@ -134,7 +191,7 @@
 
     
 
-    <a-marker vidhandler preset="hiro">
+    <a-marker logohandler scannerhandler vidhandler emitevents="true" id="marker" preset="hiro">
 
       <a-video vidhandler class="clickable" material="src: #vid" scale="5.822 2.002 4.119" position="-0.06 .503 -1.677" rotation="-66.2 0.192 -0.042"></a-video>
 
@@ -144,35 +201,10 @@
       <a-box scale="1 1 1" material="src: #profileTexture" position="0 0 0" radius="2" segments-height="84"></a-box>
       
       
-      <a-link class="clickable" href="https://www.linkedin.com/in/erica-barnette/" title="" image="" position=".8 0.0 1" rotation="-67.42 0 0" scale="0.6 0.6 0.6" geometry="primitive:circle;segments:64" material="shader:portal;side:double;visible:false"
-        link="title:.">
-      <a-box scale="0.8 0.8 1.05" material="src:#ericaTexture" position="1.252 -0.0036935886841299587 -0.2155814669584256" radius="2" segments-height="84" rotation="-23.450000000000003 0 0" geometry="">
-      </a-box>
-      </a-link>
-      
-      <a-link class="clickable" href="https://www.linkedin.com/in/seth-mcgaugh-575787116/" position="1.6 0.0 .333" title="" image="" rotation="-67.42 0 0" scale="0.6 0.6 0.6" geometry="primitive:circle;segments:64" material="shader:portal;side:double;visible:false"
-        link="title:.">
-      <a-box scale="0.8 0.8 1.05" material="src:#sethTexture" position="-0.05854454977856898 -0.0036935886841299587 -0.2155814669584256" radius="2" segments-height="84" rotation="-23.450000000000003 0 0" geometry="">
-      </a-box>
-      </a-link>
-      
-      <a-link class="clickable" href="https://www.linkedin.com/in/drgordonjones/" title="" image="" position="2.2 0.0 -.33" rotation="-67.42 0 0" scale="0.6 0.6 0.6" geometry="primitive:circle;segments:64" material="shader:portal;side:double;visible:false"
-      link="title:.">
-      <a-box scale="0.8 0.8 1.05" material="src:#gordonTexture" position="-1.05 -0.0036935886841299587 -0.2155814669584256" radius="2" segments-height="84" rotation="-23.450000000000003 0 0" geometry="">
-      </a-box>
-      </a-link>
+  
       
 
-      <a-entity
-        geometry="primitive: plane; width: 4; height: 2;"
-        material="color: #ffffff; shader: flat; side: both; transparent: true;"
-        mapbox="center: -81.01640, 34.0000; zoom: 15.4; 
-        accessToken: pk.eyJ1Ijoib2hteWdhdWdoIiwiYSI6ImNrZHhqNWYwZDF3YnAzMHQ2c3R1MTZsNWIifQ.AfbXwF55tfopc6OaFjm88A;
-          style: mapbox://styles/ohmygaugh/cko60xl0z23n217qu3wbr32j3;
-          pxToWorldRatio: 1300;
-                "
-        position="0.340 -0.83574 3.5" rotation="-66.42 0 0" scale="2.267 2.2680 6.316"
-      ></a-entity>
+  
     </a-marker>
 
     <a-entity camera="" position="" rotation="" scale="" visible=""></a-entity>
